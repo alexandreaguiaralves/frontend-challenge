@@ -1,0 +1,24 @@
+<?php 
+$pagedResults = $block->getPagination();
+?>
+
+<div class="container" id="cards-container">
+    <?php if (count($pagedResults) > 0): ?>
+        <?php foreach ($pagedResults as $item): ?>
+            <a href="<?= $this->getUrl('marvel/index/view', ['id'=>$item['id']])?>">
+                <div class="card <?= isset($item['isRare']) ? 'rare' : ''; ?>">
+                    <img src="<?= $block->getImageSrc($item)?>" alt="<?= $item['name']; ?>">
+                    <div class="card-content">
+                        <h3 class="card-title"><?= $item['name']; ?></h3>
+                        <p class="card-description"><?= $item['description'] ?: 'Sem descrição disponível.'; ?></p>
+                        <?php if (isset($item['isRare'])): ?>
+                            <p class="rare-label"><?= __('Rare') ?></p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </a> 
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>Não há itens para exibir nesta página.</p>
+    <?php endif; ?>
+</div>

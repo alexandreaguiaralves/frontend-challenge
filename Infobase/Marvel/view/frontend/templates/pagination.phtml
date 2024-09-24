@@ -1,0 +1,20 @@
+<?
+$page = $block->getCurrentPage();
+$totalPages = $block->getTotalPages();
+?>
+
+<div class="pagination">
+    <?php if ($page > 1): ?>
+        <a href="?p=<?= $page - 1; ?>" class="pagination-button">Anterior</a>
+    <?php endif; ?>
+
+    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+        <a href="?p=<?= $i; ?>" class="pagination-button <?= $i == $page ? 'active' : ''; ?>">
+            <?= $i; ?>
+        </a>
+    <?php endfor; ?>
+
+    <?php if ($page < $totalPages): ?>
+        <a href="?p=<?= $page + 1; ?>" class="pagination-button">Próxima</a>
+    <?php endif; ?>
+</div>

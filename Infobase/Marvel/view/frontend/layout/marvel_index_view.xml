@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Infobase_Marvel::css/view.css"/>
+        <css src="Infobase_Marvel::css/source/slick.css"/>
+        <css src="Infobase_Marvel::css/source/slick-theme.css"/>
+        <script src="Infobase_Marvel::js/common.js" async="async" />
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block class="Infobase\Marvel\Block\View" name="view_marvel" template="view.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

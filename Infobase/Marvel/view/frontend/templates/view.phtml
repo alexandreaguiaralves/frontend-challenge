@@ -1,0 +1,87 @@
+<?php
+$characterId = $this->getRequest()->getParam('id');
+$character = $block->fetchCharacterData($characterId);
+
+if (!$character) {
+    echo "Personagem não encontrado.";
+    return;
+}
+
+$comics = $block->fetchDetailsFor('comics', $character['comics']['items']);
+$series = $block->fetchDetailsFor('series', $character['series']['items']);
+$stories = $block->fetchDetailsFor('stories', $character['stories']['items']);
+$events = $block->fetchDetailsFor('events', $character['events']['items']);
+?>
+
+<div class="product-page">
+    <div class="product-image">
+    <img src="<?php echo str_replace('http', 'https', $character['thumbnail']['path']) . '.' . $character['thumbnail']['extension']; ?>" alt="<?php echo $character['name']; ?>">
+    </div>
+    <div class="product-details">
+        <h1 class="product-title"><?php echo $character['name']; ?></h1>
+        <div class="product-description">
+            <p><?php echo !empty($character['description']) ? $character['description'] : 'Nenhuma descrição disponível.'; ?></p>
+        </div>
+
+        <h2 class="comics-title">Quadrinhos</h2>
+        <div class="comics-carousel slider-marvel" id="comics-carousel">
+            <?php if (empty($comics)): ?>
+                <p>Nenhum quadrinho disponível.</p>
+            <?php else: ?>
+                <?php foreach ($comics as $comic): ?>
+                    <div class="carousel-item">
+                    <img src="<?php echo str_replace('http', 'https', $comic['thumbnail']['path']) . '.' . $comic['thumbnail']['extension']; ?>" alt="<?php echo $comic['title'] ?? 'Título não disponível'; ?>">
+                        <h3><?php echo $comic['title'] ?? 'Título não disponível'; ?></h3>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+
+        <?php echo $this->getLayout()->createBlock('Infobase\Marvel\Block\View')->setTemplate('Infobase_Marvel::promo_banner.phtml')->toHtml(); ?>
+
+        <h2 class="comics-title">Séries</h2>
+        <div class="series-carousel slider-marvel" id="series-carousel">
+            <?php if (empty($series)): ?>
+                <p>Nenhuma série disponível.</p>
+            <?php else: ?>
+                <?php foreach ($series as $serie): ?>
+                    <div class="carousel-item">
+                        <img src="<?php echo str_replace('http', 'https', $serie['thumbnail']['path']) . '.' . $serie['thumbnail']['extension']; ?>" alt="<?php echo $serie['title'] ?? 'Título não disponível'; ?>">
+                        <h3><?php echo $serie['title'] ?? 'Título não disponível'; ?></h3>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+
+        <h2 class="comics-title">Histórias</h2>
+        <div class="stories-carousel slider-marvel" id="stories-carousel">
+            <?php if (empty($stories)): ?>
+                <p>Nenhuma história disponível.</p>
+            <?php else: ?>
+                <?php foreach ($stories as $story): ?>
+                    <div class="carousel-item story-card">
+                        <h3><?php echo !empty($story['title']) ? $story['title'] : 'Título não disponível'; ?></h3>
+                        <p><?php echo !empty($story['description']) ? $story['description'] : 'Descrição não disponível.'; ?></p>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+
+        <h2 class="comics-title">Eventos</h2>
+        <div class="events-carousel" id="events-carousel">
+            <?php if (empty($events)): ?>
+                <p>Nenhum evento disponível.</p>
+            <?php else: ?>
+                <?php foreach ($events as $event): ?>
+                    <div class="carousel-item">
+                        <h3><?php echo $event['title'] ?? 'Título não disponível'; ?></h3>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+
+        <div class="back-button">
+            <a href="javascript:history.back()" class="button">Voltar</a>
+        </div>
+    </div>
+</div>
